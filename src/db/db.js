@@ -1,4 +1,4 @@
-const mysql = require('mysql')
+const mysql = require('mysql2')
 const config = require('../config')
 
 const dbConfig = {
@@ -42,6 +42,18 @@ function getAll(entidad){
     } );
 }
 
+function getById(entidad,id){
+    return new Promise((resolve, reject) => {
+        conn.query(`SELECT * FROM ${entidad} where id=${id}`, (error, result) => {
+            if(error)
+                return reject(error);
+            
+            return resolve(result);
+        })
+    } );
+}
+
 module.exports = {
     getAll,
+    getById
 }

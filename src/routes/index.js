@@ -24,5 +24,12 @@ enrutador.get('/listar', (req,res)=>{
         resp.success(req, res, 200, items);
     })
 })
+ 
+enrutador.get('/byId/:id', (req,res)=>{
+    const id = req.params.id
+    const getAllUser = controller.getById(id).then((items) => {
+        resp.success(req, res, 200, items);
+    })
+})
 
 module.exports=enrutador

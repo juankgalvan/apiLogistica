@@ -5,6 +5,11 @@ function getAll(){
     return db.getAll(Entidad);
 }
 
+function getById(id){
+    return db.getById(Entidad,id)
+}
+
 module.exports = {
     getAll,
+    getById
 }
