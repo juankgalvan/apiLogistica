@@ -4,11 +4,15 @@ const resp=require('../util/rsp')
 const controller =  require('../modulos/usuario/controller')
 
 enrutador.post('/login', (req,res)=>{
-    console.log(req.body)
-    if(req.body.email=='j.camilo.g.perez@gmail.com'& req.body.contrasena=='12345'){
-        resp.success(req,res,200,'Exitoso')
-    }
-    resp.success(req,res,500,'Error Interno')
+    user=req.body.email
+    pass=req.body.contrasena
+    const getUser = controller.log(user,pass).then((items) => {
+        if(items=1){
+            resp.success(req,res,200,'Exitoso')
+        }else
+        resp.success(req,res,500,'Error Interno')
+    })
+    
 })
 
 enrutador.post('/create', (req,res)=>{
@@ -27,7 +31,7 @@ enrutador.get('/listar', (req,res)=>{
  
 enrutador.get('/byId/:id', (req,res)=>{
     const id = req.params.id
-    const getAllUser = controller.getById(id).then((items) => {
+    const getUser = controller.getById(id).then((items) => {
         resp.success(req, res, 200, items);
     })
 })

@@ -9,7 +9,12 @@ function getById(id){
     return db.getById(Entidad,id)
 }
 
+function log(user,pass){
+    return db.log(Entidad,user,pass)
+}
+
 module.exports = {
     getAll,
-    getById
+    getById,
+    log
 }
