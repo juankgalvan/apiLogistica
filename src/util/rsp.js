@@ -1,9 +1,9 @@
 exports.success=function(req,resp,status,msj){
     resp.status(status).send({
         error: false,
-        status: 200,
+        status: status,
         msg: msj,
-        body: req.body
+        body: msj
     })
 }
 
@@ -12,6 +12,6 @@ exports.error=function(req,resp,status,msj){
         error: true,
         status: status,
         msg: msj,
-        body: req.body
+        body: msj
     })
 }

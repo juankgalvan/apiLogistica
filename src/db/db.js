@@ -55,7 +55,7 @@ function getById(entidad,id){
 
 function log(entidad,user,pass){
     return new Promise((resolve, reject) => {
-        conn.query(`SELECT * FROM ${entidad} where usuario=${user} and pass=${pass}`, (error, result) => {
+        conn.query(`SELECT * FROM ${entidad} where email='${user}' and password='${pass}'`, (error, result) => {
             if(error)
                 return reject(error);
             

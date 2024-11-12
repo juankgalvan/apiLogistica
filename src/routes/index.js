@@ -7,10 +7,10 @@ enrutador.post('/login', (req,res)=>{
     user=req.body.email
     pass=req.body.contrasena
     const getUser = controller.log(user,pass).then((items) => {
-        if(items=1){
-            resp.success(req,res,200,'Exitoso')
+        if(items==true){
+            resp.success(req,res,200,'loggin succesfull')
         }else
-        resp.success(req,res,500,'Error Interno')
+        resp.success(req,res,500,'Usuario no encontrado')
     })
     
 })
