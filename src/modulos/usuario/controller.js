@@ -13,8 +13,13 @@ function log(user,pass){
     return db.log(Entidad,user,pass)
 }
 
+function reg(nom,ed,mail,pass){
+    return db.reg(Entidad,nom,ed,mail,pass)
+}
+
 module.exports = {
     getAll,
     getById,
-    log
+    log,
+    reg
 }

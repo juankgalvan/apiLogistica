@@ -3,21 +3,47 @@ const enrutador=express.Router()
 const resp=require('../util/rsp')
 const controller =  require('../modulos/usuario/controller')
 
-enrutador.post('/login', (req,res)=>{
-    user=req.body.email
-    pass=req.body.contrasena
-    const getUser = controller.log(user,pass).then((items) => {
-        if(items==true){
-            resp.success(req,res,200,'loggin succesfull')
-        }else
-        resp.success(req,res,500,'Usuario no encontrado')
-    })
-    
-})
+enrutador.post('/login', async (req, res) => {
+    try {
+        const user = req.body.email;
+        const pass = req.body.contrasena;
 
-enrutador.post('/create', (req,res)=>{
-    resp.success(req,res,200,'Exitoso')
-})
+        // Llama al método log y espera el resultado
+        const items = await controller.log(user, pass);  // Asegúrate de reemplazar 'users' con el nombre real de tu tabla
+
+        // Verifica que haya resultados en la consulta
+        if (items && items.length > 0) {
+            console.log('Loggin successful:', items); // Debugging
+            resp.success(req, res, 200, 'Loggin successful');
+        } else {
+            console.log('Usuario no encontrado'); // Debugging
+            resp.success(req, res, 404, 'Usuario no encontrado');
+        }
+    } catch (error) {
+        console.error('Error en el servidor:', error);  // Debugging
+        resp.success(req, res, 500, 'Error en el servidor');
+    }
+});
+
+enrutador.post('/create', (req, res) => {
+    const nom = req.body.nombre;
+    const ed = req.body.edad;
+    const mail = req.body.email;
+    const pass = req.body.contrasena;
+
+    controller.reg(nom, ed, mail, pass)
+        .then((items) => {
+            if (items) {
+                resp.success(req, res, 200, 'Registro insertado exitosamente');
+            } else {
+                resp.success(req, res, 500, 'Error de sistema');
+            }
+        })
+        .catch((error) => {
+            console.error(error); // Log de error para depuración
+            resp.success(req, res, 500, 'Error al procesar la solicitud');
+        });
+});
 
 enrutador.post('/contacto', (req,res)=>{
     resp.success(req,res,200,'Exitoso')

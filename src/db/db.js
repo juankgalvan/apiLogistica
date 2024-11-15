@@ -53,9 +53,25 @@ function getById(entidad,id){
     } );
 }
 
-function log(entidad,user,pass){
+function log(entidad, user, pass) {
     return new Promise((resolve, reject) => {
-        conn.query(`SELECT * FROM ${entidad} where email='${user}' and password='${pass}'`, (error, result) => {
+        const query = `SELECT * FROM ${entidad} WHERE email = "${user}" AND password = ${pass}`;
+        
+        // Usa placeholders (?) para evitar inyecciones SQL
+        conn.query(query, [user, pass], (error, result) => {
+            if (error) {
+                console.error('Error en la consulta SQL:', error);  // Debugging
+                return reject(error);
+            }
+            console.log('Resultado de la consulta SQL:', result);  // Debugging
+            return resolve(result);
+        });
+    });
+}
+
+function reg(entidad,nombre,edad,correo,pass){
+    return new Promise((resolve, reject) => {
+        conn.query(`insert into ${entidad} (nombre,edad,email,password) values ('${nombre}',${edad},'${correo}','${pass}')`, (error, result) => {
             if(error)
                 return reject(error);
             
@@ -67,5 +83,6 @@ function log(entidad,user,pass){
 module.exports = {
     getAll,
     getById,
-    log
+    log,
+    reg
 }
